@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvellous Oyeleke | Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+  <style>
+
+    .theme-btn{
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    /* ==========================================
+       TOKENS
+       ========================================== */
+    :root{
+        --ink: #0E1526;
+        --blue: #2647B3;
+        --blue-bright: #3D63E0;
+        --gold: #E0A23A;
+        --paper: #F6F7FB;
+        --surface: #FFFFFF;
+        --text: #262B3A;
+        --text-muted: #636B82;
+        --hairline: rgba(38,43,58,0.12);
+
+        /* Retune Bootstrap's own primary + dark tokens so every
+           built-in utility (btn-primary, text-primary, bg-dark, focus rings...)
+           picks up the brand palette instead of Bootstrap's defaults. */
+        --bs-primary: var(--blue);
+        --bs-primary-rgb: 38,71,179;
+        --bs-primary-text-emphasis: #1B3480;
+        --bs-primary-bg-subtle: #E4E9FA;
+        --bs-primary-border-subtle: #B9C6F2;
+        --bs-dark: var(--ink);
+        --bs-dark-rgb: 14,21,38;
+        --bs-body-font-family: 'Inter', sans-serif;
+        --bs-link-color: var(--blue);
+        --bs-link-hover-color: var(--blue-bright);
+    }
+
+    body.dark-mode{
+        --paper: #0E1526;
+        --surface: #161F33;
+        --text: #E8ECF5;
+        --text-muted: #98A2BC;
+        --hairline: rgba(232,236,245,0.14);
+    }
+
+    html{ scroll-behavior: smooth; }
+
+    body{
+      font-family: 'Inter', sans-serif;
+      background-color: var(--paper);
+      color: var(--text);
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    h1, h2, h3, h4, h5, h6{
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+    }
+
+    /* ==========================================
+       KEYFRAMES
+       ========================================== */
+    @keyframes slideIn{
+        from{ transform: translateX(-60px); opacity: 0; }
+        to{ transform: translateX(0); opacity: 1; }
+    }
+    .hero-text{ animation: slideIn 0.9s ease; }
+
+    @keyframes fadeIn{
+        from{ opacity: 0; transform: scale(0.9); }
+        to{ opacity: 1; transform: scale(1); }
+    }
+    .hero-image{ animation: fadeIn 1s ease; }
+
+    /* ==========================================
+       EYEBROW LABELS
+       ========================================== */
+    .eyebrow{
+        color: var(--blue);
+        font-weight: 600;
+        font-size: 13px;
+        letter-spacing: 0.03em;
+    }
+    body.dark-mode .eyebrow{ color: #7C97F0; }
+
+    /* ==========================================
+       HERO
+       ========================================== */
+    .hero{ background-color: var(--paper); }
+
+    .title{ font-size: clamp(2.6rem, 6vw, 4rem); line-height: 1.1; }
+    .title .accent{ color: var(--blue); }
+    body.dark-mode .title .accent{ color: #7C97F0; }
+
+    .profile-img{
+        width: 250px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 6px solid var(--surface);
+        box-shadow: 0 20px 45px rgba(38,71,179,0.18);
+    }
+
+    .btn-first, .btn-second{ transition: transform 0.25s ease, box-shadow 0.25s ease; }
+    .btn-first:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(38,71,179,0.28); }
+    .btn-second:hover{ transform: translateY(-2px); }
+
+    /* ==========================================
+       ABOUT
+       ========================================== */
+    .years{
+        background: var(--ink);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .years:hover{
+        transform: translateY(-6px);
+        box-shadow: 0 20px 40px rgba(14,21,38,0.35);
+    }
+    .years h2{ color: var(--gold); font-size: 3rem; }
+
+    /* ==========================================
+       STATS BAND
+       ========================================== */
+    .stats-band{ background: var(--ink); color: #E8ECF5; }
+
+    .stat-number{
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 44px;
+        line-height: 1;
+        color: var(--gold);
+        display: flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 2px;
+        font-variant-numeric: tabular-nums;
+    }
+    .stat-suffix{ font-size: 26px; }
+    .stat-label{
+        margin-top: 10px;
+        font-size: 13px;
+        color: #9BA8CC;
+    }
+    .stat-item{
+        border-left: 1px solid rgba(232,236,245,0.14);
+    }
+    .stat-item:first-child{ border-left: none; }
+
+    /* ==========================================
+       SKILLS
+       ========================================== */
+    .skills-section{ background-color: var(--paper); }
+
+    .skill-card{
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        box-shadow: none;
+        transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+    .skill-card:hover{
+        transform: translateY(-6px);
+        border-color: var(--blue);
+    }
+    .skill-icon{ font-size: 38px; color: var(--blue); }
+    .skill-icon.gold{ color: var(--gold); }
+
+    /* ==========================================
+       PROJECTS
+       ========================================== */
+    .filter-btn{ transition: transform 0.25s ease; }
+    .filter-btn:hover{ transform: translateY(-2px); }
+
+    .project-card{
+        background: var(--surface);
+        border: none;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 4px 18px rgba(14,21,38,0.06);
+    }
+    .project-card:hover{
+        transform: translateY(-8px);
+        box-shadow: 0 20px 38px rgba(14,21,38,0.14);
+    }
+    .project-image{
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 600;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+    .project-btn{ transition: transform 0.25s ease; }
+    .project-btn:hover{ transform: translateX(4px); }
+
+    /* ==========================================
+       TESTIMONIALS
+       ========================================== */
+    .testimonials-section{ background: var(--paper); }
+
+    .testimonial-wrap{
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: 24px;
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 300px 1fr;
+    }
+
+    .testimonial-panel{
+        padding: 48px 36px;
+        border-right: 1px solid var(--hairline);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .testimonial-mark{
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 88px;
+        line-height: 0.8;
+        color: var(--gold);
+    }
+    .testimonial-panel p{
+        color: var(--text-muted);
+        font-size: 14px;
+        line-height: 1.6;
+        max-width: 30ch;
+        margin: 0;
+    }
+
+    .testimonial-list{ display: flex; flex-direction: column; }
+    .t-entry{
+        padding: 18px 36px;
+        border-bottom: 1px solid var(--hairline);
+        cursor: pointer;
+        display: flex;
+        align-items: baseline;
+        gap: 18px;
+        background: none;
+        border-left: 3px solid transparent;
+        transition: border-left-color 0.2s ease, background 0.2s ease;
+        width: 100%;
+        text-align: left;
+        font-family: inherit;
+        color: inherit;
+    }
+    .t-entry:first-child{ border-top: 1px solid var(--hairline); }
+    .t-entry.active{ border-left-color: var(--blue); background: var(--paper); }
+    .t-entry-name{ font-size: 14px; font-weight: 600; white-space: nowrap; }
+    .t-entry-role{ font-size: 13px; color: var(--text-muted); white-space: nowrap; }
+
+    .testimonial-stage{ padding: 40px 36px; min-height: 120px; }
+    .t-quote{
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 1.4;
+        margin: 0 0 16px;
+        max-width: 55ch;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .t-quote.visible{ opacity: 1; transform: translateY(0); }
+    .t-attribution{
+        display: flex; align-items: center; gap: 10px;
+        font-size: 13px; color: var(--text-muted);
+        opacity: 0; transition: opacity 0.3s ease;
+    }
+    .t-attribution.visible{ opacity: 1; }
+    .t-attribution .dot{ width: 5px; height: 5px; border-radius: 50%; background: var(--gold); }
+
+    @media (max-width: 767px){
+        .testimonial-wrap{ grid-template-columns: 1fr; }
+        .testimonial-panel{ border-right: none; border-bottom: 1px solid var(--hairline); flex-direction: row; align-items: center; padding: 28px 24px; }
+        .testimonial-panel p{ display: none; }
+        .testimonial-mark{ font-size: 56px; }
+        .t-entry, .testimonial-stage{ padding-left: 24px; padding-right: 24px; }
+    }
+
+    /* ==========================================
+       CONTACT
+       ========================================== */
+    .contact-box{
+        background: var(--surface);
+        border: 1px solid var(--hairline);
+        border-radius: 24px;
+        overflow: hidden;
+    }
+    .contact-row{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 26px 32px;
+        border-bottom: 1px solid var(--hairline);
+        text-decoration: none;
+        color: var(--text);
+        transition: background 0.2s ease;
+    }
+    .contact-row:last-child{ border-bottom: none; }
+    .contact-row:hover{ background: var(--paper); color: var(--text); }
+    .contact-row .icon{
+        width: 48px; height: 48px;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 20px;
+        background: var(--bs-primary-bg-subtle);
+        color: var(--blue);
+        flex-shrink: 0;
+    }
+    .contact-row .icon.gold{ background: rgba(224,162,58,0.15); color: var(--gold); }
+    .contact-row .label{ font-size: 12px; color: var(--text-muted); margin-bottom: 2px; }
+    .contact-row .value{ font-weight: 600; font-size: 16px; }
+
+    /* ==========================================
+       DARK MODE (existing Bootstrap component overrides)
+       ========================================== */
+    body.dark-mode .card{ background-color: var(--surface); color: var(--text); }
+    body.dark-mode .text-secondary{ color: var(--text-muted) !important; }
+    body.dark-mode .form-control{ background-color: #1b2440; color: var(--text); border-color: var(--hairline); }
+    body.dark-mode .form-control::placeholder{ color: #7C87A6; }
+
+    /* ==========================================
+       MOBILE
+       ========================================== */
+    @media (max-width: 768px){
+        .hero{ min-height: 80vh; text-align: center; }
+    }
+
+    /* ==========================================
+       SCROLL REVEAL
+       ========================================== */
+    .reveal{ opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.active{ opacity: 1; transform: translateY(0); }
+
+    @media (prefers-reduced-motion: reduce){
+        .reveal{ opacity: 1; transform: none; transition: none; }
+        .hero-text, .hero-image{ animation: none; }
+    }
+
+    /* ==========================================
+       SCROLL TO TOP
+       ========================================== */
+    #scrollTop{
+        position: fixed; right: 25px; bottom: 25px;
+        width: 45px; height: 45px; border-radius: 50%;
+        display: none; z-index: 999; transition: transform 0.25s ease;
+    }
+    #scrollTop:hover{ transform: translateY(-4px); }
+  </style>
+
+
+  <!-- NAVBAR -->
+<nav id="mainNavbar" class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="#home"
+           style="font-family:'Space Grotesk',sans-serif;">
+            MARVIE
+        </a>
+
+        <!-- Right-side controls -->
+        <div class="nav-controls">
+
+            <!-- Dark mode -->
+            <button id="themeToggle" class="theme-btn" title="Toggle theme">
+                <i id="themeIcon" class="bi bi-moon-fill"></i>
+            </button>
+
+            <!-- Hamburger -->
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#skills">Skills</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#projects">Projects</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#testimonials">Testimonials</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container py-5">
+      <div class="row align-items-center">
+        <div class="col-md-5 hero-image">
+          <img src="/PERSONAL/DP 1web.jpg" alt="Portrait of Marvellous Oyeleke" class="img-fluid profile-img">
+        </div>
+        <div class="col-md-7 hero-text">
+          <p class="eyebrow mb-2">Hello, I'm Marvellous</p>
+          <h1 class="title fw-bold">
+            Graphic Designer
+            <br>
+            <span class="accent text-primary">&amp; Website Developer</span>
+          </h1>
+          <p class="text-secondary mt-3">I combine creativity and technology to create memorable brands, digital experiences and modern websites.</p>
+          <button class="btn btn-primary btn-first">View my work</button>
+          <button class="btn btn-outline-primary btn-second">Contact me</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <div class="container py-5" id="about">
+    <div class="row align-items-center g-5">
+        <div class="col-lg-5 reveal">
+            <div class="years text-white rounded-4 p-5 text-center shadow">
+                <h2>3+</h2>
+                <p class="mb-0">Years of creative experience</p>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <p class="eyebrow mb-2">About me</p>
+            <h2 class="fw-medium display-6">Turning ideas into <span class="accent">visual experiences</span></h2>
+            <p class="text-secondary mt-4">
+                I'm a creative designer and web developer focused on Building
+                visually compelling brands and modern digital experiences. I combine
+                strong design principles with clean, functional development to create work
+                that is both impactful annnd purposeful.
+
+                From brand identity to responsive websites, I create
+                polished, purposeful digital experiences with creativity and precision.
+            </p>
+            <p class="text-secondary">
+                I'm currently developing my skills in HTML, Bootstrap and JavaScript
+                while continuing to grow as a designer.
+            </p>
+            <a href="#contact"><button class="btn btn-primary">Let's work together</button></a>
+        </div>
+    </div>
+  </div>
+
+  <!-- STATS BAND -->
+  <section class="stats-band py-5">
+    <div class="container py-4">
+      <div class="row g-4 text-center">
+        <div class="col-6 col-lg-3 stat-item reveal" data-target="60" data-suffix="+">
+          <div class="stat-number"><span class="num">0</span><span class="stat-suffix suffix"></span></div>
+          <div class="stat-label">Projects completed</div>
+        </div>
+        <div class="col-6 col-lg-3 stat-item reveal" data-target="30" data-suffix="+">
+          <div class="stat-number"><span class="num">0</span><span class="stat-suffix suffix"></span></div>
+          <div class="stat-label">Happy clients</div>
+        </div>
+        <div class="col-6 col-lg-3 stat-item reveal" data-target="99" data-suffix="%">
+          <div class="stat-number"><span class="num">0</span><span class="stat-suffix suffix"></span></div>
+          <div class="stat-label">Client satisfaction</div>
+        </div>
+        <div class="col-6 col-lg-3 stat-item reveal" data-target="4" data-suffix="+">
+          <div class="stat-number"><span class="num">0</span><span class="stat-suffix suffix"></span></div>
+          <div class="stat-label">Years of experience</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills" class="skills-section py-5">
+    <div class="container py-5">
+        <div class="text-center mb-5 reveal">
+            <p class="eyebrow">My skills</p>
+            <h2 class="display-6 fw-medium">What I work with</h2>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="card skill-card rounded-4 h-100 p-4 text-center">
+                    <div class="skill-icon mb-3"><i class="bi bi-diagram-3-fill"></i></div>
+                    <h5 class="fw-semibold">React</h5>
+                    <p class="text-secondary mb-0">Building fast, component-based interfaces</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="card skill-card rounded-4 h-100 p-4 text-center">
+                    <div class="skill-icon gold mb-3"><i class="bi bi-filetype-js"></i></div>
+                    <h5 class="fw-semibold">JavaScript</h5>
+                    <p class="text-secondary mb-0">Adding interaction and functionality</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="card skill-card rounded-4 h-100 p-4 text-center">
+                    <div class="skill-icon mb-3"><i class="bi bi-filetype-css"></i></div>
+                    <h5 class="fw-semibold">CSS3</h5>
+                    <p class="text-secondary mb-0">Styling responsive, polished layouts</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="card skill-card rounded-4 h-100 p-4 text-center">
+                    <div class="skill-icon gold mb-3"><i class="fa-brands fa-figma"></i></div>
+                    <h5 class="fw-semibold">Figma</h5>
+                    <p class="text-secondary mb-0">Designing and prototyping interfaces</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="card skill-card rounded-4 h-100 p-4 text-center">
+                    <div class="skill-icon gold mb-3"><i class="bi bi-palette-fill"></i></div>
+                    <h5 class="fw-semibold">Graphic Design</h5>
+                    <p class="text-secondary mb-0">Creating visual identities and visual designs</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 reveal">
+                <div class="card skill-card rounded-4 h-100 p-4 text-center">
+                    <div class="skill-icon mb-3"><i class="bi bi-git"></i></div>
+                    <h5 class="fw-semibold">Git</h5>
+                    <p class="text-secondary mb-0">Tracking changes and managing projects</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="py-5" id="projects">
+    <div class="container py-5">
+        <div class="text-center mb-5 reveal">
+            <p class="eyebrow">My work</p>
+            <h2 class="display-6 fw-medium">Featured projects</h2>
+            <p class="text-secondary">A selection of my design and development work.</p>
+        </div>
+
+        <div class="text-center mb-5 reveal">
+            <button class="btn btn-primary filter-btn me-2 mb-2" data-filter="all">All</button>
+            <button class="btn btn-outline-primary filter-btn me-2 mb-2" data-filter="web">Web</button>
+            <button class="btn btn-outline-primary filter-btn mb-2" data-filter="design">Design</button>
+        </div>
+
+        <div id="projectContainer" class="row g-4">
+            <div class="col-md-6 col-lg-4 project-item reveal" data-category="web">
+                <div class="card project-card rounded-4 h-100">
+                    <div class="project-image bg-dark text-white"><i class="bi bi-cart3 me-2"></i>E-Commerce</div>
+                    <div class="card-body p-4">
+                        <span class="badge bg-primary">Web</span>
+                        <h5 class="fw-semibold mt-3">E-Commerce website</h5>
+                        <p class="text-secondary">A responsive e-commerce website built with Bootstrap and JavaScript.</p>
+                        <a href="#home" class="btn btn-dark project-btn">View project <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 project-item reveal" data-category="design">
+                <div class="card project-card rounded-4 h-100">
+                    <div class="project-image bg-primary text-white"><i class="bi bi-brush me-2"></i>Branding</div>
+                    <div class="card-body p-4">
+                        <span class="badge bg-primary">Design</span>
+                        <h5 class="fw-semibold mt-3">Brand identity</h5>
+                        <p class="text-secondary">A complete visual identity created for a fictional brand.</p>
+                        <a href="https://www.behance.net/oyelekemarvell" class="btn btn-dark project-btn">View project <i class="bi bi-arrow-up-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 project-item reveal" data-category="design">
+                <div class="card project-card rounded-4 h-100">
+                    <div class="project-image" style="background: var(--gold); color: var(--ink);"><i class="bi bi-brush me-2"></i>Poster</div>
+                    <div class="card-body p-4">
+                        <span class="badge bg-primary">Design</span>
+                        <h5 class="fw-semibold mt-3">Promotional poster</h5>
+                        <p class="text-secondary">A promotional design created for a digital campaign.</p>
+                        <a href="https://www.behance.net/oyelekemarvell" class="btn btn-dark project-btn">View project <i class="bi bi-arrow-up-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-4 project-item reveal" data-category="web">
+                <div class="card project-card rounded-4 h-100">
+                    <div class="project-image bg-primary text-white"><i class="bi bi-shop me-2"></i>E-commerce</div>
+                    <div class="card-body p-4">
+                        <span class="badge bg-primary">Website</span>
+                        <h5 class="fw-semibold mt-3">Eatery website</h5>
+                        <p class="text-secondary">A modern online store for a premium food delivery brand in Oyo, Nigeria.</p>
+                        <a href="https://www.behance.net/oyelekemarvell" class="btn btn-dark project-btn">View project <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section py-5" id="testimonials">
+    <div class="container py-5">
+        <div class="text-center mb-5 reveal">
+            <p class="eyebrow">Testimonials</p>
+            <h2 class="display-6 fw-medium">What clients say</h2>
+        </div>
+
+        <div class="testimonial-wrap reveal">
+            <div class="testimonial-panel">
+                <div class="testimonial-mark">&ldquo;</div>
+                <p>A few notes from clients, kept as they were sent.</p>
+            </div>
+            <div>
+                <div class="testimonial-stage">
+                    <p class="t-quote visible" id="tQuote"></p>
+                    <div class="t-attribution visible" id="tAttribution"></div>
+                </div>
+                <div class="testimonial-list" id="tList"></div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <!-- BEHANCE CTA -->
+  <section class="bg-dark text-white py-5">
+    <div class="container text-center py-5 reveal">
+        <i class="bi bi-bootstrap-fill display-5" style="color: var(--gold);"></i>
+        <h2 class="display-6 fw-medium mt-3">More of my <span style="color: var(--gold);">design</span> work</h2>
+        <p class="text-white-50">Explore my complete design portfolio on Behance.</p>
+        <a href="https://www.behance.net/oyelekemarvell" target="_blank" class="btn btn-light btn-lg">Visit my Behance <i class="bi bi-arrow-up-right"></i></a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="py-5" id="contact">
+    <div class="container text-center py-5 reveal">
+        <p class="eyebrow">Contact</p>
+        <h2 class="display-6 fw-medium">Let's work together</h2>
+        <p class="text-secondary">Have a project or idea? Reach out through any of these.</p>
+    </div>
+    <div class="row justify-content-center reveal">
+        <div class="col-lg-6">
+            <div class="contact-box">
+                <a href="https://wa.me/2348163461374" target="_blank" class="contact-row">
+                    <div class="icon gold"><i class="bi bi-whatsapp"></i></div>
+                    <div>
+                        <div class="label">WhatsApp</div>
+                        <div class="value">+234 816 346 1374</div>
+                    </div>
+                </a>
+                <a href="mailto:hello@marviegraphix.com" class="contact-row">
+                    <div class="icon"><i class="bi bi-envelope-fill"></i></div>
+                    <div>
+                        <div class="label">Email</div>
+                        <div class="value">marveoye2021@gmail.com</div>
+                    </div>
+                </a>
+                <a href="tel:+2348163461374" class="contact-row">
+                    <div class="icon"><i class="bi bi-telephone-fill"></i></div>
+                    <div>
+                        <div class="label">Phone</div>
+                        <div class="value">+234 816 346 1374</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-white py-3">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2026 MarvieGraphix. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                <a href="https://www.behance.net/oyelekemarvell" class="text-decoration-none text-white me-3"><i class="bi bi-behance me-1"></i>Behance</a>
+                <a href="https://x.com/marviegfx" class="text-decoration-none text-white"><i class="bi bi-twitter-x me-1"></i>X</a>
+            </div>
+        </div>
+    </div>
+  </footer>
+
+  <button id="scrollTop" class="btn btn-primary shadow"><i class="bi bi-arrow-up"></i></button>
+
+  <!-- MY SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+<script>
+    // DARK / LIGHT MODE
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
+
+    themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-mode");
+        if (document.body.classList.contains("dark-mode")) {
+            themeIcon.classList.remove("bi-moon-fill");
+            themeIcon.classList.add("bi-sun-fill");
+        } else {
+            themeIcon.classList.remove("bi-sun-fill");
+            themeIcon.classList.add("bi-moon-fill");
+        }
+    });
+
+    // NAVBAR SHADOW
+    const navbar = document.getElementById("mainNavbar");
+    window.addEventListener("scroll", function () {
+        if (window.scrollY > 50) { navbar.classList.add("scrolled"); }
+        else { navbar.classList.remove("scrolled"); }
+    });
+
+    // PROJECT FILTERS
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const projects = document.querySelectorAll(".project-item");
+    filterButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+            const filter = button.dataset.filter;
+            filterButtons.forEach(function (btn) {
+                btn.classList.remove("btn-primary");
+                btn.classList.add("btn-outline-primary");
+            });
+            button.classList.remove("btn-outline-primary");
+            button.classList.add("btn-primary");
+            projects.forEach(function (project) {
+                const category = project.dataset.category;
+                project.style.display = (filter === "all" || category === filter) ? "block" : "none";
+            });
+        });
+    });
+
+    // SCROLL REVEAL
+    const revealElements = document.querySelectorAll(".reveal");
+    function revealOnScroll() {
+        revealElements.forEach(function (element) {
+            const windowHeight = window.innerHeight;
+            const elementTop = element.getBoundingClientRect().top;
+            const revealPoint = 100;
+            if (elementTop < windowHeight - revealPoint) { element.classList.add("active"); }
+        });
+    }
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+
+    // SCROLL TO TOP
+    const scrollTop = document.getElementById("scrollTop");
+    window.addEventListener("scroll", function () {
+        scrollTop.style.display = window.scrollY > 400 ? "block" : "none";
+    });
+    scrollTop.addEventListener("click", function () {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // STATS COUNTER
+    function easeOutExpo(t) { return t === 1 ? 1 : 1 - Math.pow(2, -10 * t); }
+
+    function animateCount(el, target, suffix, duration = 1400) {
+        const numEl = el.querySelector('.num');
+        const suffixEl = el.querySelector('.suffix');
+        suffixEl.textContent = suffix;
+        const start = performance.now();
+        function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            numEl.textContent = Math.round(easeOutExpo(progress) * target);
+            if (progress < 1) { requestAnimationFrame(tick); }
+            else { numEl.textContent = target; }
+        }
+        requestAnimationFrame(tick);
+    }
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const statObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                const target = parseInt(el.dataset.target, 10);
+                const suffix = el.dataset.suffix || '';
+                if (prefersReducedMotion) {
+                    el.querySelector('.num').textContent = target;
+                    el.querySelector('.suffix').textContent = suffix;
+                } else {
+                    animateCount(el, target, suffix);
+                }
+                statObserver.unobserve(el);
+            }
+        });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('.stat-item').forEach(el => statObserver.observe(el));
+
+    // TESTIMONIALS
+    const testimonials = [
+        {
+            name: "Maya Okonkwo",
+            role: "Product Lead, Fernbridge",
+            quote: "He took a brief that was honestly half-formed and turned it into something sharper than what we'd pitched internally. Every round of feedback came back the same day, with clear reasoning behind each decision."
+        },
+        {
+            name: "Daniel Reyes",
+            role: "Founder, Northwind Studio",
+            quote: "What stood out was how little hand-holding the project needed. I described the problem once, and the solution that came back solved things I hadn't even flagged yet."
+        },
+        {
+            name: "Chiamaka Nwosu",
+            role: "Marketing Manager, Oyo Eats",
+            quote: "Our new site looks as good as our branding now, which is rare to find in one person. The whole process from design to launch was smooth."
+        },
+        {
+            name: "Tom Whitfield",
+            role: "Creative Director, Halcyon",
+            quote: "I've worked with a lot of freelancers who are strong on execution but weak on judgment. This was the opposite — every choice had a reason behind it."
+        }
+    ];
+
+    const tList = document.getElementById('tList');
+    const tQuote = document.getElementById('tQuote');
+    const tAttribution = document.getElementById('tAttribution');
+    let activeT = 0;
+
+    function renderTList() {
+        tList.innerHTML = '';
+        testimonials.forEach((t, i) => {
+            const btn = document.createElement('button');
+            btn.className = 't-entry' + (i === activeT ? ' active' : '');
+            btn.setAttribute('aria-pressed', i === activeT);
+            btn.innerHTML = `<span class="t-entry-name">${t.name}</span><span class="t-entry-role">${t.role}</span>`;
+            btn.addEventListener('click', () => setActiveT(i));
+            tList.appendChild(btn);
+        });
+    }
+
+    function setActiveT(i) {
+        if (i === activeT) return;
+        activeT = i;
+        tQuote.classList.remove('visible');
+        tAttribution.classList.remove('visible');
+        setTimeout(() => {
+            const t = testimonials[activeT];
+            tQuote.textContent = '\u201C' + t.quote + '\u201D';
+            tAttribution.innerHTML = `<span>${t.name}</span><span class="dot"></span><span>${t.role}</span>`;
+            tQuote.classList.add('visible');
+            tAttribution.classList.add('visible');
+            renderTList();
+        }, 180);
+    }
+
+    const firstT = testimonials[0];
+    tQuote.textContent = '\u201C' + firstT.quote + '\u201D';
+    tAttribution.innerHTML = `<span>${firstT.name}</span><span class="dot"></span><span>${firstT.role}</span>`;
+    renderTList();
+</script>
+
+</body>
+</html>
